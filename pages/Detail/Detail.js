@@ -2,9 +2,11 @@ import {
   Button,
   FlatList,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React from "react";
@@ -31,15 +33,29 @@ const Detail = ({ route }) => {
     return <Error />;
   }
 
+  const linking=()=>{
+    const youtube = mealData.strYoutube;
+    Linking.openURL(youtube);  
+  };
+
+
+   
   return (
-    <ScrollView style={styles.container}>
-      <Card>
+ 
+      <ScrollView style={styles.container}>
         <Image style={styles.image} source={{ uri: mealData.strMealThumb }} />
         <Text style={styles.title}> {mealData.strMeal} </Text>
         <Text style={styles.area}> {mealData.strArea} </Text>
-        <Button title="Watch on Youtube" color={"red"} style={styles.button} />
-      </Card>
-    </ScrollView>
+        <Text style={styles.content}> {mealData.strInstructions} </Text>
+      
+       <TouchableOpacity
+        onPress={linking}
+        style={[styles.button, { backgroundColor: 'red' }]}
+      >
+        <Text style={[styles.buttonText, { fontSize: 20 }]}>Watch on Youtube</Text>
+      </TouchableOpacity>
+      </ScrollView>
+
   );
 };
 
@@ -47,10 +63,12 @@ export default Detail;
 
 const styles = StyleSheet.create({
   container: {
+    gap:10,
     flex: 1,
     padding: 5,
     margin: 5,
-    backgroundColor: "#9c9a9a00",
+    flex: 1,
+    backgroundColor: "#114d0b00",
   },
   image: {
     width: "100%",
@@ -66,7 +84,20 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "500",
   },
+  buttonContainer: {
+    marginTop:10,
+    paddingTop:10
+  },
   button: {
-    borderRadius: 10,
+    padding: 10,
+    borderRadius: 5,
+    marginBottom:10,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  buttonText: {
+    fontSize: 16, // Varsayılan metin boyutu
+    color: 'white',
+    
   },
 });
